@@ -5,6 +5,7 @@ da fare:
 - stabilire credenziali di accesso al db
 - dare un nome al server per permettere connessioni remote
 - AGGIUNGERE TRY/CATHCS
+- assicurarsi che le query con dati utente siano eseguite con bind e prepare  
 
 
 DEBUGS:
