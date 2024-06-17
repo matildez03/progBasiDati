@@ -9,3 +9,7 @@ da fare:
 di codice
 - creare index.html
 - creare file di connessione al db
+
+DEBUGS:
+- logout quando si esce dall'homepage
+- 
