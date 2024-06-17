@@ -4,6 +4,7 @@ da fare:
 - scrivere la traduzione del db sul file
 - stabilire credenziali di accesso al db
 - dare un nome al server per permettere connessioni remote
+- AGGIUNGERE TRY/CATHCS
 
 
 DEBUGS:
