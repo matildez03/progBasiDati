@@ -18,10 +18,14 @@
 </head>
 <body>
 <h1>Amministrazione di ESQL</h1>
-<div id="account"><?php echo "Docente: ".$_SESSION['login'][2]." " . $_SESSION['login'][3].""?></div> <!--stampa i dati dell'account-->
+<div id="account">
+    <?php echo "Docente: ".$_SESSION['login'][2]." " . $_SESSION['login'][3].""?>
+    <a href="logout.php">Logout</a>
+</div> <!--stampa i dati dell'account-->
 
 <nav>
     <li><a>i tuoi test</a></li>
+    <li><a href="tabelle.php">le tue tabelle</a></li>
     <li><a>statistiche</a></li>
     <li><a>messaggi</a></li>
 </nav>

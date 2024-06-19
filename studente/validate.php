@@ -18,6 +18,7 @@ if (isset($_POST['loginStudente'])) {
         $login = mysqli_fetch_array($query1);
 // Creo una variabile di sessione contenente i dati dell'utente
         $_SESSION['login'] = array($login['email'], $login['password'],$login['nome'], $login['cognome'] );
+        $getTests = "SELECT titolo FROM TEST, DOCENTE WHERE docente = email"; //query che ritorna tutti i test creati da quel docente
         echo $_SESSION['login'][0]; // Recupero l'email dell'utente che ha registrato la sessione
         echo '<h3>Login effettuato con successo!</h3>';
 

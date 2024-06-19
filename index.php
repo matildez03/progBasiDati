@@ -1,7 +1,7 @@
 <?php
 echo 'Versione di PHP: ' . phpversion();
 @include 'config-database.php';
-session_abort(); //se c'era una sessione in corso, il ritorno ad index comporta il logout
+session_destroy(); //se c'era una sessione in corso, il ritorno ad index comporta il logout
 session_start();
 ?>
 <!DOCTYPE html>
