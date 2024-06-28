@@ -1,8 +1,8 @@
 <?php
-echo 'Versione di PHP: ' . phpversion();
-@include 'config-database.php';
-session_destroy(); //se c'era una sessione in corso, il ritorno ad index comporta il logout
-session_start();
+if(isset($_SESSION['login'])) {
+    $_SESSION['login']= null;
+    require('logout.php'); //esegue il logout se c'era una sessione in corso
+}
 ?>
 <!DOCTYPE html>
 <html lang="it">

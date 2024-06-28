@@ -1,6 +1,8 @@
 <?php
-session_start();
-//prova di accesso al db con le credeniziali date in input
+
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 
 $db_host = 'localhost'; // Nome del server
 $db_user = 'root';      // Nome utente amministratore database
