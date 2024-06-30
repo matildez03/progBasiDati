@@ -9,6 +9,8 @@ if (!isset($_SESSION['login'])) {
     header('Location: ../index.php');
     exit;
 }
+require ('read/validate.php');
+echo json_encode($_SESSION['tests']);
 
 ?>
 <!DOCTYPE html>
@@ -32,12 +34,11 @@ if (!isset($_SESSION['login'])) {
 <form id="nuovoTest" action="upload/createTest.php" method="POST" style="display: none">
     <label>Titolo Test:<input type="text" name="titoloTest" required></label>
     <select name="mostraSoluz">
-        <option value="mostra" selected>Mostra soluzioni</option>
-        <option value="nascondi">Nascondi soluzioni</option>
+        <option value="1" selected>Mostra soluzioni</option>
+        <option value="0">Nascondi soluzioni</option>
     </select>
     <input type="submit">
 </form>
-<select name='corretta'><option value='1'>Risposta 1</option><option value='2'>Risposta 2</option><option value='3'>Risposta 3</option><option value='4'>Risposta 4</option></select>
 
 </body>
 </html>

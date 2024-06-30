@@ -1,5 +1,13 @@
 <?php
-require('../read/validate.php'); //accesso e configurazione db
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+if (!isset($_SESSION['login'])) {
+    header('Location: ../index.php');
+    exit;
+}
+require ('../config-esercizi.php'); //accesso al db di esercizi come $esdb
+require ('../../config.php'); //accesso al db principale come $mydb
 //recupero i dati mandati in post
 $atts = $_POST['att'];
 $tit = $_POST['titolo'];
@@ -35,12 +43,14 @@ try {
         }
     }
     //echo($crea);
-    $res = $mydb->prepare($crea);
+    $res = $esdb->prepare($crea);
+    //inserimento della tabella in ESQL-ESERCIZI
     if ($res->execute()) { //riorna true se la tabella è stata creata
         //echo "la tabella $tit è stata creata";
         //inserisco i meta dati della tabella nel db
 
-        //inserimento in TABELLA
+        //inserimento in TABELLA (db ESQL )
+        //TODO: salva come stored procedure
         $data = date('Y-m-d'); // Formato 'YYYY-MM-DD'
         $insert1 = "INSERT INTO TABELLA VALUES (?,?,?,?);";
         $res1 = $mydb->prepare($insert1);

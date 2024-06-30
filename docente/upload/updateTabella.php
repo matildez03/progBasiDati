@@ -1,5 +1,5 @@
 <?php
-require('../read/validate.php');
+require('../read/validate.php'); //accesso e connessione al db
 if(!isset($_SESSION['login'])){
     header('Location: ../index.php');
     exit;
@@ -12,15 +12,17 @@ if (session_status() == PHP_SESSION_NONE) {
 
 //ricavo tutti i dati della tabella data in post
 $titolo = $_POST['nome'];
+//salvo il nome della tabella in modifica in una variabile di sessione
+$_SESSION['tabella'] = $titolo;
 //salvo tutti i dati della tabella in un array associativo
+/*
 $query = 'SELECT * FROM ' . $titolo;
 $res = $mydb->query($query);
-$valori = mysqli_fetch_all($res);
+$valori = mysqli_fetch_all($res);*/
+require ('../read/fetch_records.php');
 
-//ricavo i nomi degli attributi
-$query2 = "SELECT * FROM ATTRIBUTO WHERE nomeTabella = '$titolo';";
-$res2 = $mydb->query($query2);
-$attributi = mysqli_fetch_all($res2);
+//ricavo i nomi degli attributi in un array di nomi colonne
+require ('../read/fetch_attributi.php');
 
 ?>
 <!DOCTYPE html>
@@ -52,7 +54,7 @@ $attributi = mysqli_fetch_all($res2);
             } ?>
         </tr>
         <!-- stampo una riga per ciascuna istanza-->
-        <?php foreach ($valori as $ist) { //itero tutte le istanze della tabella
+        <?php foreach ($records as $ist) { //itero tutte le istanze della tabella
             echo('<tr>');
             foreach ($ist as $val) {//itero tutti i valori dell'istanza
                 echo('<td>'.$val.'</td>');

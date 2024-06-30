@@ -22,15 +22,15 @@ if (isset($_GET['titolo'])) {
     }
     // Se la tabella è stata trovata, mostra le informazioni
     if ($tabellaSelezionata != null) {
+        //salvo la tabella da visualizzare in una variabile di sessione
+        $_SESSION['table'] = $tabellaSelezionata;
         //salvo tutti i dati della tabella in un array associativo
-        $query = 'SELECT * FROM ' . $titolo;
-        $res = $mydb->query($query);
-        $valori = mysqli_fetch_all($res);
+        require ('read/fetch_records.php');
 
         //ricavo i nomi degli attributi
-        $query2 = "SELECT nome FROM ATTRIBUTO WHERE nomeTabella = '$titolo';";
-        $res2 = $mydb->query($query2);
-        $attributi = mysqli_fetch_all($res2);
+        require ('read/fetch_attributi.php'); //salvo gli attributi in un array associativo $attributi
+        echo '<br>records trovati: '.json_encode($records);
+        echo '<br>attributi trovati: '.json_encode($attributi);
 
     } else {
         echo '<p>Tabella non trovata.</p>';
@@ -111,11 +111,11 @@ if (isset($_GET['action']) && $_GET['action'] === 'create') {
         </tr>
         <tr>
             <?php for($i=0; $i<count($attributi); $i++) {
-                echo('<th>' . $attributi[$i][0] . '</th>');
+                echo('<th>' . $attributi[$i]['nome'] . '</th>');
             } ?>
         </tr>
         <!-- stampo una riga per ciascuna istanza-->
-        <?php foreach ($valori as $ist) { //itero tutte le istanze della tabella
+        <?php foreach ($records as $ist) { //itero tutte le istanze della tabella
             echo('<tr>');
             foreach ($ist as $val) {//itero tutti i valori dell'istanza
                 echo('<td>' . $val . '</td>');
@@ -123,7 +123,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'create') {
             echo('</tr>');
         } ?>
     </table>
-    <form action="upload/update.php" method="post"> <!--?titolo=<?php //echo urlencode($titolo); ?>" method="post">-->
+    <form action="upload/updateTabella.php" method="post"> <!--?titolo=<?php //echo urlencode($titolo); ?>" method="post">-->
         <input type="hidden" name="nome" value=<?php echo $titolo?>>
         <input type="submit" value="modifica">
     </form>

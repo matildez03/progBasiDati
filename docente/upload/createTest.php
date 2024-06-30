@@ -3,7 +3,7 @@ require('../read/validate.php'); //accesso e configurazione db
 
 $titoloTest = $_POST['titoloTest'];
 $docente = $_SESSION['login'][0];
-$mostra = $_POST['mostraSoluz'];
+$mostra = intval($_POST['mostraSoluz']); //lo salvo come int
 $data = date("Y-m-d");
 $query = 'INSERT INTO TEST (titolo, docente, data, visualizzaRisposte) values (?,?,?,?)';
 // Prepara la query
@@ -16,7 +16,7 @@ if ($res = $mydb->prepare($query)) {
             "titolo" => $titoloTest,
             "docente" => $docente,
             "data" => $data,
-            "visualizzaRisposta" => $mostra
+            "visualizzaRisposte" => $mostra
         );
         $_SESSION['tests'][] = $nuovoTest;
     } else {
@@ -28,11 +28,7 @@ if ($res = $mydb->prepare($query)) {
     echo "Errore nella preparazione della query: " . $mydb->error;
 }
 
-
-
 //recupero i dati mandati in post
-$titoloTest = $_POST['titoloTest'];
-$mostra = $_POST['mostraSoluz'];
 $testiQuesito = $_POST['testoQuesito']; //array delle domande
 $diff = $_POST['diff'];//array delle difficoltà
 $soluzioni = $_POST['soluzione']; //array delle soluzioni aperte
@@ -46,6 +42,9 @@ $risposta1 = $_POST['testoRisposta1'];
 $risposta2 = $_POST['testoRisposta2'];
 $risposta3 = $_POST['testoRisposta3'];
 $risposta4 = $_POST['testoRisposta4'];
+
+//reindirizzo l'utente alla pagina di modifica:
+header('Location: ../aggiornaTest.php?titolo='.$titoloTest . "&show=". $mostra);
 
 
 
