@@ -9,7 +9,7 @@
 <body>
 <h1>registrati in ESQLQ</h1>
 
-<form action="read/register.php" method="POST">
+<form action="upload/register.php" method="POST">
     <h4>I tuoi dati:</h4>
     <input name="nome" type="text" placeholder="nome">
     <input name="cognome" type="text" placeholder="cognome">

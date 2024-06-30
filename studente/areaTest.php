@@ -3,7 +3,6 @@
  * mi assicuro che il file sia accesibile solo se è stato eseguito l'accesso
  */
 
-require('read/fetch_tests.php');
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
@@ -11,6 +10,7 @@ if (!isset($_SESSION['login'])) {
     header('Location: ../index.php');
     exit;
 }
+require('read/fetch_tests.php');
 
 ?>
 <!DOCTYPE html>
@@ -34,7 +34,7 @@ if (!isset($_SESSION['login'])) {
     <h5>Test in completamento:</h5>
     <ol>
         <?php for ($i=0; $i<count($testInCompletamento); $i++) {
-            $test = $tests[$i];
+            $test = $testInCompletamento[$i];
             echo "<li>$test[0]</li><a href='svolgiTest.php?titolo=$test[0]&stato=inCompletamento'>Riprendi test</a>";
         } ?>
     </ol>

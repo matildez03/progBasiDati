@@ -13,13 +13,14 @@ if (!isset($_GET['titolo'])) {
     exit;
 }
 $titolo = $_GET['titolo'];
-$_SESSION['test'] = $titolo;
+$_SESSION['test'] = $titolo; //associo il titolo del test  ad una variabile di sessione
 $stato = 'aperto';
 require('read/fetch_quesiti.php'); //salvo i quesiti nella vaiabile $quesiti
-echo json_encode($quesiti);
+echo json_encode($quesiti); //debug
 $risposte = array();
 if (isset($_GET['stato'])) {
     $stato = $_GET['stato'];
+    echo '<br>'. $stato; //debug
     require('read/fetch_risposte.php'); //sovrascrivo $risposte con i valori della risposts
 }
 if ($stato == 'aperto') {
@@ -28,7 +29,7 @@ if ($stato == 'aperto') {
         $risposte[] = "";
     }
 }
-
+echo '<br>Svolgi test - risposte:'. json_encode($risposte); //debug
 //creo l'html per la visualizzazione del test
 ?>
 <!DOCTYPE html>
@@ -58,7 +59,7 @@ if ($stato == 'aperto') {
                        ");
                 foreach($opzioni as $opzione){
                     echo("<input type='radio' value='$opzione[testo]' name='$quesito[num]'");
-                    //if($risposta == $opzione['testo']){ echo("checked");}
+                    if($risposta['testo'] == $opzione['testo']){ echo("checked");}
                     echo(">$opzione[testo]</input>
                     ");
                 }
@@ -67,7 +68,7 @@ if ($stato == 'aperto') {
                         <h5>Domanda $quesito[num]:</h5>
                         <p>Difficoltà: $quesito[difficolta]</p>
                         <p>$quesito[testo]</p>
-                        <textarea name='$quesito[num]'>$risposte[$i]</textarea>
+                        <textarea name='$quesito[num]'>$risposta[testo]</textarea>
                        ");
             }
             echo ("</div>");

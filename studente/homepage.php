@@ -7,8 +7,6 @@ session_start();
 if(!isset($_SESSION['login'])){
     header('Location: ../index.php');
     exit;
-}else{
-    echo $_SESSION['login'][0];
 }
 
 ?>
@@ -24,7 +22,7 @@ if(!isset($_SESSION['login'])){
 
 <nav>
     <li><a href="areaTest.php">fai un test</a></li>
-    <li><a>statistiche</a></li>
+    <li><a href="../statistiche.php">statistiche</a></li>
     <li><a>messaggi</a></li>
 </nav>
 

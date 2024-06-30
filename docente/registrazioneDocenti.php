@@ -9,7 +9,7 @@
 <body>
 <h1>registrati in ESQLQ</h1>
 
-<form action="read/register.php" method="POST">
+<form action="upload/register.php" method="POST">
     <h4>Dati di accesso al database</h4>
     <input name="usdb" type="text">
     <input name="pwdb" type="password">

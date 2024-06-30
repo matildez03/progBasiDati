@@ -35,7 +35,7 @@ if(isset($_SESSION['login'])){
 
     //query per selezionare tutti i test che lo studente ha lasciato in completamento
     $stato = 'inCompletamento';
-    $query2 = "SELECT * FROM TESTAVVIATO WHERE studente = ? AND stato=?;";
+    $query2 = "SELECT * FROM TESTAVVIATO WHERE studente = ? AND stato= ? ;";
     $stmt = $mydb->prepare($query2);
     if ($stmt === false) {
         throw new Exception("Errore nella preparazione della query: " . $mydb->error);
@@ -45,6 +45,28 @@ if(isset($_SESSION['login'])){
         $res2 = $stmt->get_result();
         $testInCompletamento = mysqli_fetch_all($res2);
     }
+
+    //query per selezionare tuti i test che lo studente non ha ancora iniziato e che sono disponibili
+    /*prova con stored sprocedure
+    $query3 = "SELECT *
+    FROM TEST 
+    WHERE titolo NOT IN(
+        SELECT test
+        FROM TESTAVVIATO
+        WHERE studente = ?
+        AND (stato = 'concluso' OR stato = 'inCompletamento')
+    );";*/
+    $query3 = "CALL Elenco_Nuovi_Test(?)";//query per selezionare tuti i test che lo studente non ha ancora iniziato e che sono disponibili
+    $stmt = $mydb->prepare($query3);
+    if ($stmt === false) {
+        throw new Exception("Errore nella preparazione della query: " . $mydb->error);
+    }
+    $stmt->bind_param('s', $studente);
+    if($stmt->execute()){
+        $res3 = $stmt->get_result();
+        $tests = mysqli_fetch_all($res3); //sovrascrivo la variabile dei test disponibili con quelli che non sono conclusi o in completamento
+    }
+    echo ('<br>test disponibili:' . json_encode($tests));
 
 
 }
