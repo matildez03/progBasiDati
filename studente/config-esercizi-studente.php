@@ -1,12 +1,14 @@
 <?php
-//accesso al db ESQL-ESERCIZI
+//accesso al db ESQL-ESERCIZI da studente
+//lo studente può accedere al db e può solo effettuare query select
+
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
 $db_host = 'localhost'; // Nome del server
-$db_user = 'root';      // Nome utente amministratore database
-$db_password = 'root';  // Password database
+$db_user = 'studente';      // Nome utente amministratore database
+$db_password = 'pwstudente';  // Password database
 $db_nomedb = 'ESQL-ESERCIZI';   // Nome database
 
 // Effettua la connessione al database

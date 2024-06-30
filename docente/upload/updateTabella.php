@@ -14,14 +14,10 @@ if (session_status() == PHP_SESSION_NONE) {
 $titolo = $_POST['nome'];
 //salvo il nome della tabella in modifica in una variabile di sessione
 $_SESSION['tabella'] = $titolo;
-//salvo tutti i dati della tabella in un array associativo
-/*
-$query = 'SELECT * FROM ' . $titolo;
-$res = $mydb->query($query);
-$valori = mysqli_fetch_all($res);*/
+//salvo tutti i dati della tabella in un array associativo $records
 require ('../read/fetch_records.php');
 
-//ricavo i nomi degli attributi in un array di nomi colonne
+//ricavo gli attributi della tabella in un array associativo $attributi
 require ('../read/fetch_attributi.php');
 
 ?>
@@ -46,10 +42,10 @@ require ('../read/fetch_attributi.php');
         </tr>
         <tr>
             <?php foreach ($attributi as $att) {
-                if($att[4]==1){ //se l'attributo è indicato come chiave primara
-                    echo('<th><u>' . $att[2] . '</u></th>');
+                if($att['isChiave']==1){ //se l'attributo è indicato come chiave primara
+                    echo('<th><u>' . $att['nome'] . '</u></th>');
                 }else { //la quinta colonna di ATTRIBUTO è isChiave, 0 non è chiave 1 è chiave
-                    echo('<th>' . $att[2] . '</th>');
+                    echo('<th>' . $att['nome'] . '</th>');
                 }
             } ?>
         </tr>
@@ -72,7 +68,7 @@ require ('../read/fetch_attributi.php');
             <fieldset>
                 <legend>Attributi: </legend>
             <?php foreach($attributi as $att) {
-                echo("<label><input type='checkbox' name='chiave[]' value=$att[2]>$att[2]</label>");
+                echo("<label><input type='checkbox' name='chiave[]' value=$att[nome]>$att[nome]</label>");
             }
             ?>
             </fieldset>
@@ -85,18 +81,18 @@ require ('../read/fetch_attributi.php');
             <table>
                 <tr><th>Colonna</th><th>Tipo</th><th>Valore</th></tr>
                 <?php foreach ($attributi as $att){
-                    echo("<tr><td>$att[2]</td><td>$att[3]</td><td>");
-                    if($att[3]=='int'){
-                        echo("<input type='number' name='value[]'><input type='hidden' name='types[]' value='$att[3]'><input type='hidden' name='attributi[]' value='$att[2]'>");
+                    echo("<tr><td>$att[nome]</td><td>$att[tipo]</td><td>");
+                    if($att['tipo']=='int'){
+                        echo("<input type='number' name='value[]'><input type='hidden' name='types[]' value='$att[tipo]'><input type='hidden' name='attributi[]' value='$att[nome]'>");
                     }
-                    if($att[3]=='boolean'){
-                        echo("<input type='number' max='1' min='0' name='value[]'><label>0: false, 1: true</label><input type='hidden' name='types[]' value='$att[3]'><input type='hidden' name='attributi[]' value='$att[2]'>");
+                    if($att['tipo']=='boolean'){
+                        echo("<input type='number' max='1' min='0' name='value[]'><label>0: false, 1: true</label><input type='hidden' name='types[]' value='$att[tipo]'><input type='hidden' name='attributi[]' value='$att[nome]'>");
                     }
-                    if($att[3]=='text' || $att[3]=='varchar'){
-                        echo("<input type='text' name='value[]'><input type='hidden' name='types[]' value='$att[3]'><input type='hidden' name='attributi[]' value='$att[2]'>");
+                    if($att['tipo']=='text' || $att['tipo']=='varchar'){
+                        echo("<input type='text' name='value[]'><input type='hidden' name='types[]' value='$att[tipo]'><input type='hidden' name='attributi[]' value='$att[nome]'>");
                     }
-                    if($att[3]=='date'){
-                        echo("<input type='date' name='value[]'><input type='hidden' name='types[]' value='$att[3]'><input type='hidden' name='attributi[]' value='$att[2]'>");
+                    if($att['tipo']=='date'){
+                        echo("<input type='date' name='value[]'><input type='hidden' name='types[]' value='$att[tipo]'><input type='hidden' name='attributi[]' value='$att[nome]'>");
                     }
                     echo("</td></tr>");
                 }?>
@@ -174,36 +170,6 @@ require ('../read/fetch_attributi.php');
 </div>
 
 </body>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        document.getElementById('tabEsterna').addEventListener('change', function() {
-            var selectedTable = document.getElementById('tabEsterna').value;
-            console.log('tabella selezionata: '+ selectedTable);
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', 'fetch_columns.php', true);
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === 4 && xhr.status === 200) {
-                    try {
-                    var columns = JSON.parse(xhr.responseText);
-                    var colEsterna = document.getElementById('colEsterna');
-                    columns.forEach(function(column) {
-                        var option = document.createElement('option');
-                        option.value = column;
-                        option.textContent = column;
-                        colEsterna.appendChild(option);
-                    });
-                    } catch (e) {
-                        console.error("Errore nel parsing JSON:", e);
-                        console.log("Risposta del server:", xhr.responseText);
-                    }
-                }
-            };
-            xhr.send("table=" + encodeURIComponent(selectedTable));
-            console.log(encodeURIComponent(selectedTable));
-        });
-    });
-</script>
 </html>
 
 

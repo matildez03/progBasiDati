@@ -18,7 +18,10 @@ if(!isset($_SESSION['login'])){
 </head>
 <body>
 <h1>Amministrazione di ESQL</h1>
-<div id="account"><?php echo "Studente: ".$_SESSION['login'][2]." " . $_SESSION['login'][3].""?></div> <!--stampa i dati dell'account-->
+<div id="account">
+    <?php echo "Studente: ".$_SESSION['login'][2]." " . $_SESSION['login'][3].""?>
+    <a href="../logout.php">Logout</a>
+</div>
 
 <nav>
     <li><a href="areaTest.php">fai un test</a></li>

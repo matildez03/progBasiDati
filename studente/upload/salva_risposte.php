@@ -5,6 +5,7 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 require('../read/fetch_quesiti.php'); //salva in $quesiti tutti i quesiti del test in sessione
+require ('../config-esercizi-studente.php');
 $test = $_SESSION['test'];
 $studente = $_SESSION['login'][0];
 
@@ -13,34 +14,19 @@ $studente = $_SESSION['login'][0];
 echo '<br>test:' .$test;
 echo '<br>studente:' .$studente;
 foreach ($quesiti as $quesito) {
+    //salvo il quesito in sessione
+    $_SESSION['quesito'] = $quesito;
     $num = $quesito['num'];
     $risposta = trim($_POST[$quesito['num']]);
+    $_SESSION['risposta'] = $risposta;
+
+    require ('../read/calcola_esito.php');
+    //debug:
+    echo '<br>esito:' .$esito;
     //debug:
     echo '<br>risposta:' .$risposta;
     echo '<br>num:' .$num;
-    $esito = 0;
-    if ($quesito['tipo'] == 'chiuso') {
-        require('../read/fetch_opzioni.php'); //salva le opzioni in $opzioni
-        foreach ($opzioni as $opzione) {
-            if ($opzione['corretta'] == 1) {
-                $corretta = $opzione['testo']; //salvo il testo dell'opzione corretta per poi conforntarlo con quello della risposta
-                break;
-            }
-        }
-        if ($risposta == $corretta) {
-            $esito = 1;
-        }
-    } else { //il quesito è di codice
-        require('../read/fetch_soluzioni.php');
-        foreach ($soluzioni as $soluzione) { //TODO: correggi, l'esito va calcolato in base al risultato della query.
-            if ($risposta == $soluzione['testo']) {
-                $esito = 1;
-                break; //esco dal ciclo
-            }
-        }
-    }
-    //debug:
-    echo '<br>risposta:' .$esito;
+
     $query = "CALL inserisci_risposta(?,?,?,?,?)";//query per selezionare tuti i test che lo studente non ha ancora iniziato e che sono disponibili
     $stmt = $mydb->prepare($query);
     if ($stmt === false) {

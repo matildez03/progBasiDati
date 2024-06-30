@@ -21,7 +21,7 @@ $risposte = array();
 if (isset($_GET['stato'])) {
     $stato = $_GET['stato'];
     echo '<br>'. $stato; //debug
-    require('read/fetch_risposte.php'); //sovrascrivo $risposte con i valori della risposts
+    require('read/fetch_risposte.php'); //sovrascrivo $risposte un array di testi di risposta
 }
 if ($stato == 'aperto') {
     require 'upload/nuovoTest.php'; //eseguo l'inserimento del nuovo test
@@ -68,7 +68,7 @@ echo '<br>Svolgi test - risposte:'. json_encode($risposte); //debug
                         <h5>Domanda $quesito[num]:</h5>
                         <p>Difficoltà: $quesito[difficolta]</p>
                         <p>$quesito[testo]</p>
-                        <textarea name='$quesito[num]'>$risposta[testo]</textarea>
+                        <textarea name='$quesito[num]'>$risposta</textarea>
                        ");
             }
             echo ("</div>");

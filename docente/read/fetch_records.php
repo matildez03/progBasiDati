@@ -13,10 +13,10 @@ error_reporting(E_ALL & ~E_NOTICE);//ignoro le notices
 
 try {
     if (isset($_SESSION['table'])) {
-        $table = $_SESSION['table'];
+        $table = $_SESSION['table']['nome'];
+        echo '<br>tabella su cui cerco records: '. $table;
         $query = "SELECT * FROM ". $table;
         $stmt = $esdb->prepare($query);
-        $stmt->bind_param("s", $table);
         $stmt->execute();
         $result = $stmt->get_result();
         if (!$result) {

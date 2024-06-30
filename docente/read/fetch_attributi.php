@@ -12,7 +12,8 @@ error_reporting(E_ALL & ~E_NOTICE);//ignoro le notices
 
 try {
     if (isset($_SESSION['table'])) {
-        $table = $_SESSION['table'];
+        $table = $_SESSION['table']['nome'];
+        echo '<br>tabella su cui cerco attributi: '. $table;
         $query = "SELECT * FROM ATTRIBUTO WHERE nomeTabella = ?";
         $stmt = $mydb->prepare($query);
         $stmt->bind_param("s", $table);

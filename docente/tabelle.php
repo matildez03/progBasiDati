@@ -22,6 +22,7 @@ if (isset($_GET['titolo'])) {
     }
     // Se la tabella è stata trovata, mostra le informazioni
     if ($tabellaSelezionata != null) {
+        echo 'tabella trovata';
         //salvo la tabella da visualizzare in una variabile di sessione
         $_SESSION['table'] = $tabellaSelezionata;
         //salvo tutti i dati della tabella in un array associativo

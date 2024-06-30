@@ -11,6 +11,8 @@ if (!isset($_SESSION['login'])) {
     exit;
 }
 require('read/fetch_tests.php');
+require ('/Applications/MAMP/htdocs/progBasi/studente/config-esercizi-studente.php'); //connessione a db esercizi //TODO: rimovi da questo file x pulizia
+
 
 ?>
 <!DOCTYPE html>

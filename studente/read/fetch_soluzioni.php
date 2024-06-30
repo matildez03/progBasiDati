@@ -12,7 +12,7 @@ $result = $stmt->get_result();
 if (!$result) {
     throw new Exception("Esecuzione della query fallita: " . $stmt->error);
 }
-$opzioni = $result->fetch_all(MYSQLI_ASSOC); //salvo in un array tutti i valori salvati come array associativi
+$soluzioni = $result->fetch_all(MYSQLI_ASSOC); //salvo in un array tutti i valori salvati come array associativi
 
-echo ('<br>fetch_opz:' . json_encode($opzioni));
+echo ('<br>fetch_opz:' . json_encode($soluzioni));
 ?>
