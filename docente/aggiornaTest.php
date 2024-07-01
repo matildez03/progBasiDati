@@ -10,6 +10,9 @@ if (!isset($_SESSION['login'])) {
 $titolo ='';
 if(($_GET['titolo']) !== null){
     $titolo = $_GET['titolo'];
+    $_SESSION['test'] = $titolo;
+    //require ('read/fetch_quesiti.php'); //salva i quesiti in $quesiti
+   // echo json_encode($quesiti);
 }
 if(($_GET['show']) !== null){ //se le risposte sono visualizzabili o meno
     $show = $_GET['show'];

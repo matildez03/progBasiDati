@@ -15,19 +15,13 @@ $matricola = $_POST['matricola'];
 if ($pass == $pass2) {
     //registro il docente
     $password = md5($pass); //hasho la password in md5
-    $insert1 = "INSERT INTO UTENTE (email, password, nome, cognome) VALUES (?,?,?,?)";
-    $res = $mydb->prepare($insert1);
-    $res->bind_param('ssss', $email, $password, $nome, $cognome);
 
-    $insert2 = "INSERT INTO STUDENTE (emailUtente, matricola, anno) VALUES (?,?,?)";
-    $res2 = $mydb->prepare($insert2);
-    $res2->bind_param('sss', $email, $matricola, $anno);
-
+    $query = "CALL registra_studente(?,?,?,?,?,?);";
+    $res = $mydb->prepare($query);
+    $res->bind_param('sssssi', $nome, $cognome, $email, $password, $matricola, $anno);
     if ($res->execute()) {
-        if ($res2->execute()) {
-            echo('registrazione avvenuta con successo');
-            header('Location: ../../index.php');
-        }
+        echo('registrazione avvenuta con successo');
+        header('Location: ../../index.php');
     }
 } else {
     echo('le password non corrispondono');

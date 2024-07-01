@@ -11,27 +11,53 @@ if (isset($_POST['login'])) {
     $pass = (isset($_POST['pass'])) ? trim($_POST['pass']) : ''; // Metto nella variabile 'pass' il dato inviato dal modulo
 
     //Cripto la password in md5
-        $pass = md5($pass);
+    $pass = md5($pass);
+    // Preparazione della stored procedure
+    $query = "CALL Autentica_Studente(?, ?, @validate)";
+    $stmt = $mydb->prepare($query);
 
-// Controllo se l'utente esiste
-    $query1 = $mydb->query("SELECT * FROM UTENTE, STUDENTE WHERE UTENTE.email = STUDENTE.emailUtente AND emailUtente = '$email' AND password = '$pass' LIMIT 1");
-// Se trova un record
-    if (mysqli_num_rows($query1) == 1) {
-//salvo i dati dell'utente in un array
-        $login = mysqli_fetch_array($query1);
-// Creo una variabile di sessione contenente i dati dell'utente
-        $_SESSION['login'] = array($login['email'], $login['password'],$login['nome'], $login['cognome'] );
-        $getTests = "SELECT titolo FROM TEST, DOCENTE WHERE docente = email"; //query che ritorna tutti i test creati da quel docente
-        echo $_SESSION['login'][0]; // Recupero l'email dell'utente che ha registrato la sessione
-        echo '<h3>Login effettuato con successo!</h3>';
+    if (!$stmt) {
+        die("Preparazione della query fallita: " . $mydb->error);
+    }
 
-// Rendirizzo l'Utente
-        header('Location: ../homepage.php');
+    // Binding dei parametri di input
+    $stmt->bind_param("ss", $email, $pass);
 
-    } else
-// Se non esiste visualizzo il messaggio di errore
-        echo("<h3 style='text-align:center;background:red;color:#fff;padding:20px;'>Nome utente o password errati!</h3>");
-    //header("Refresh:4 url=../");
-} else{
+    // Esecuzione della stored procedure
+    $stmt->execute();
+
+    // Eseguire una query separata per ottenere il valore di @validate
+    $result = $mydb->query("SELECT @validate AS validate");
+
+    if (!$result) {
+        throw new Exception("Errore nell'ottenere il valore di @validate: " . $mydb->error);
+    }
+
+    $row = $result->fetch_assoc();
+    $validate = $row['validate'];
+
+    // Verifica se l'autenticazione è riuscita
+    if ($validate) {
+        // Recupero dei dati dell'utente (se necessario)
+        $query_user = "SELECT email, password, nome, cognome FROM UTENTE WHERE email = ?";
+        $stmt_user = $mydb->prepare($query_user);
+        $stmt_user->bind_param("s", $email);
+        $stmt_user->execute();
+        $res_user = $stmt_user->get_result();
+
+        if ($res_user->num_rows > 0) {
+            $login = $res_user->fetch_assoc();
+            $_SESSION['login'] = array($login['email'], $login['password'], $login['nome'], $login['cognome']);
+            header('Location: ../homepage.php');
+        } else {
+            throw new Exception("Dati utente non trovati per l'email: " . $email);
+        }
+
+        $res_user->close();
+        $stmt_user->close();
+    } else {
+        echo "<h3 style='text-align:center;padding:20px;'>Nome utente o password errati!</h3>";
+    }
+} else {
     echo("effettua il login");
 }

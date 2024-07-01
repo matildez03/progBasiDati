@@ -46,16 +46,6 @@ if(isset($_SESSION['login'])){
         $testInCompletamento = mysqli_fetch_all($res2);
     }
 
-    //query per selezionare tuti i test che lo studente non ha ancora iniziato e che sono disponibili
-    /*prova con stored sprocedure
-    $query3 = "SELECT *
-    FROM TEST 
-    WHERE titolo NOT IN(
-        SELECT test
-        FROM TESTAVVIATO
-        WHERE studente = ?
-        AND (stato = 'concluso' OR stato = 'inCompletamento')
-    );";*/
     $query3 = "CALL Elenco_Nuovi_Test(?)";//query per selezionare tuti i test che lo studente non ha ancora iniziato e che sono disponibili
     $stmt = $mydb->prepare($query3);
     if ($stmt === false) {
@@ -66,7 +56,7 @@ if(isset($_SESSION['login'])){
         $res3 = $stmt->get_result();
         $tests = mysqli_fetch_all($res3); //sovrascrivo la variabile dei test disponibili con quelli che non sono conclusi o in completamento
     }
-    echo ('<br>test disponibili:' . json_encode($tests));
+    //echo ('<br>test disponibili:' . json_encode($tests));
 
 
 }

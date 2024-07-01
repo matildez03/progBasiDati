@@ -10,12 +10,12 @@ if (session_status() == PHP_SESSION_NONE) {
 
 $test = $_SESSION['test'];
 $studente = $_SESSION['login'][0];
-$data = date('Y-m-d');
-$query = "REPLACE INTO TESTAVVIATO (test, studente, dataInizio, dataUltimaModifica,stato) VALUES(?,?,?,?,?);";
+//$query = "INSERT INTO TESTAVVIATO (test, studente, dataInizio, dataUltimaModifica,stato) VALUES(?,?,?,?,?);";
 //utilizzo replace per evitare errori nei casi in cui uno studente avesse già svolto tale test.
+$query = "CALL avvia_test(?,?);";
 $stmt = $mydb->prepare($query);
-$stmt->bind_param('sssss', $test, $studente, $data, $data, $stato);
+$stmt->bind_param('ss', $test, $studente);
 if($stmt->execute()){
-    echo 'test avviato.';
+    //echo 'test avviato.';
 }
 

@@ -43,7 +43,7 @@ require ('/Applications/MAMP/htdocs/progBasi/studente/config-esercizi-studente.p
     <h5>Test Completati:</h5>
     <ol>
         <?php foreach ($testConclusi as $test) {
-            echo "<li>$test[0]</li>";
+            echo "<li>$test[0] <a href='mostra_soluzioni.php?titolo=$test[0]'>Mostra soluzioni</a></li>";
         } ?>
     </ol>
 </div>

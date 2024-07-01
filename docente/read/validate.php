@@ -6,7 +6,6 @@ if (session_status() == PHP_SESSION_NONE) {
 
 // Includo la connessione al database
 require('/Applications/MAMP/htdocs/progBasi/config.php');
-//TODO: dividi in getParameters per prendere i dati dei docenti
 
 // Se il modulo viene inviato...
 if (isset($_POST['login'])) {
@@ -67,7 +66,7 @@ if (isset($_POST['login'])) {
 
     } else {
 // Se non esiste visualizzo il messaggio di errore
-        echo("<h3 style='text-align:center;background:red;color:#fff;padding:20px;'>Nome utente o password errati!</h3>");
+        echo("<h3 style='text-align:center;padding:20px;'>Nome utente o password errati!</h3>");
         header("Refresh:4 url=../");
     }
 }

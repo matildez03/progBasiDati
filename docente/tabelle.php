@@ -22,7 +22,6 @@ if (isset($_GET['titolo'])) {
     }
     // Se la tabella è stata trovata, mostra le informazioni
     if ($tabellaSelezionata != null) {
-        echo 'tabella trovata';
         //salvo la tabella da visualizzare in una variabile di sessione
         $_SESSION['table'] = $tabellaSelezionata;
         //salvo tutti i dati della tabella in un array associativo
@@ -30,8 +29,8 @@ if (isset($_GET['titolo'])) {
 
         //ricavo i nomi degli attributi
         require ('read/fetch_attributi.php'); //salvo gli attributi in un array associativo $attributi
-        echo '<br>records trovati: '.json_encode($records);
-        echo '<br>attributi trovati: '.json_encode($attributi);
+        //echo '<br>records trovati: '.json_encode($records);
+        //echo '<br>attributi trovati: '.json_encode($attributi);
 
     } else {
         echo '<p>Tabella non trovata.</p>';

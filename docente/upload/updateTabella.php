@@ -76,7 +76,7 @@ require ('../read/fetch_attributi.php');
         </form>
         <!-- inserimento di istanze -->
         <h4>Inserisci un'istanza:</h4>
-        <form action="insert.php" method="POST">
+        <form action="insertRiga.php" method="POST">
             <input type="hidden" name="tabella" value=<?php echo $titolo?>>
             <table>
                 <tr><th>Colonna</th><th>Tipo</th><th>Valore</th></tr>

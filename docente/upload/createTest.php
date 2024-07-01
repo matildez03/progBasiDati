@@ -5,7 +5,8 @@ $titoloTest = $_POST['titoloTest'];
 $docente = $_SESSION['login'][0];
 $mostra = intval($_POST['mostraSoluz']); //lo salvo come int
 $data = date("Y-m-d");
-$query = 'INSERT INTO TEST (titolo, docente, data, visualizzaRisposte) values (?,?,?,?)';
+
+$query = "CALL Nuovo_Test(?,?,?,?);";
 // Prepara la query
 if ($res = $mydb->prepare($query)) {
     $res->bind_param('sssi', $titoloTest, $docente, $data, $mostra);

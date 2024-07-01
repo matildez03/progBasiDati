@@ -1,4 +1,5 @@
 <?php
+
 //file che salva le istanze di una tabella in un array associativo $records
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
@@ -7,15 +8,15 @@ if (!isset($_SESSION['login'])) {
     header('Location: ../index.php');
     exit;
 }
-require ('/Applications/MAMP/htdocs/progBasi/docente/config-esercizi.php'); //accesso al db di esercizi come $esdb
+require('/Applications/MAMP/htdocs/progBasi/studente/config-esercizi-studente.php'); //accesso al db di esercizi come $esdb
 error_reporting(E_ALL & ~E_NOTICE);//ignoro le notices
 
 
 try {
     if (isset($_SESSION['table'])) {
-        $table = $_SESSION['table']['nome'];
-        echo '<br>tabella su cui cerco records: '. $table;
-        $query = "SELECT * FROM ". $table;
+        $table = $_SESSION['table'];
+        //echo '<br>tabella su cui cerco records: ' . $table;
+        $query = "SELECT * FROM " . $table;
         $stmt = $esdb->prepare($query);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -26,7 +27,7 @@ try {
         if (empty($records)) {
             throw new Exception("Nessuna record trovato per la tabella: " . $table);
         }
-        echo json_encode($records);
+        //echo json_encode($records);
     } else {
         throw new Exception("Nessuna tabella specificata nella richiesta.");
     }

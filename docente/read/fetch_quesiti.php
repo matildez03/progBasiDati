@@ -1,16 +1,21 @@
 <?php
-require '../../config.php'; //includo la connessione al db
+require '/Applications/MAMP/htdocs/progBasi/config.php'; //includo la connessione al db
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 error_reporting(E_ALL & ~E_NOTICE);//ignoro le notices
 $quesiti='quesiti';
+if (isset($_POST['test'])) {
+    $test = $_POST['test'];
+} if(isset($_SESSION['test'])){
+    $test = $_SESSION['test'];
+}
 // Abilita output buffering
 ob_start();
 try {
-    if (isset($_POST['test'])) {
-        $test = $_POST['test'];
-        $query = "SELECT * FROM QUESITO WHERE test = ?";
+    if (isset($test)) {
+        //$query = "SELECT * FROM QUESITO WHERE test = ?";
+        $query = "CALL Visualizza_Quesiti(?);";
         $stmt = $mydb->prepare($query);
         $stmt->bind_param("s", $test);
         $stmt->execute();
@@ -22,7 +27,7 @@ try {
         if (empty($quesiti)) {
             throw new Exception("Nessun quesito trovato per il test: " . $test);
         }
-        echo json_encode($quesiti);
+        //echo json_encode($quesiti);
     } else {
         throw new Exception("Nessun test specificato nella richiesta.");
     }

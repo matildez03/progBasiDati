@@ -1,5 +1,5 @@
 <?php
-require('../validate.php');
+require('../read/validate.php');
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }

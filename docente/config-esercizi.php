@@ -15,5 +15,5 @@ $esdb = new mysqli($db_host, $db_user, $db_password, $db_nomedb);
 if ($esdb->connect_error) {
     die('Errore di connessione (' . $esdb->connect_errno . ') ' . $esdb->connect_error);
 }
-echo 'connessione a ESDB esercizi effettuata';
+//echo 'connessione a ESDB esercizi effettuata';
 ?>
