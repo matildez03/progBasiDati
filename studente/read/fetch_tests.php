@@ -10,7 +10,7 @@ $tests = '';
 // creo la query
 $query="SELECT * FROM TEST;";
 $res = $mydb->query($query);
-$tests = mysqli_fetch_all($res); //salvo tutte le righe risultanti in un array Associativo
+$allTests = mysqli_fetch_all($res); //salvo tutte le righe risultanti in un array Associativo
 $testConclusi = null;
 $testInCompletamento = null;
 

@@ -29,6 +29,7 @@ if (isset($_GET['stato'])) {
 //inserisco il nuovo TESTAVVIATO
 require 'upload/nuovoTest.php';
 
+
 //creo l'html per la visualizzazione del test
 ?>
 <!DOCTYPE html>
@@ -44,37 +45,39 @@ require 'upload/nuovoTest.php';
 <div id="quesiti">
     <form id="test" action="upload/salva_risposte.php" method="POST">
     <?php
-        for($i=0; $i<count($quesiti); $i++){
+        for($i=0; $i<count($quesiti); $i++) {
             $quesito = $quesiti[$i];
             $_SESSION['quesito'] = $quesito;
-            require ('read/fetch_tabelle_quesito.php');
+            require('read/fetch_tabelle_quesito.php');
             $risposta = array(//mi assicuro che sia sempre possible accedere ad una variable risposta con valori di default
                 'numeroQuesito' => -1,
                 'testo' => '',   // Chiave 'testo' con valore vuoto di default
                 'esito' => 2   // Chiave 'esito' con valore 2 di default (nè 1 nè 0)
             );//di default associo una stringa vuota alla risposta
-            foreach($risposte as $r){ //ricavo l'eventuale risposta a tale quesito
-                if($r['numeroQuesito'] == $quesito['num']){
+            foreach ($risposte as $r) { //ricavo l'eventuale risposta a tale quesito
+                if ($r['numeroQuesito'] == $quesito['num']) {
                     $risposta = $r;
                 }
             }
 
             //controllo il tipo di quesito ed in base ad esso mostro il form
             echo '<div>';
-            if($quesito['tipo']=='chiuso'){
-                require ('read/fetch_opzioni.php'); //recupero le opzioni
+            if ($quesito['tipo'] == 'chiuso') {
+                require('read/fetch_opzioni.php'); //recupero le opzioni
                 echo("
                         <h5>Domanda $quesito[num]:</h5>
                         <p>Difficoltà: $quesito[difficolta]</p>
                         <p>$quesito[testo]</p>
                        ");
-                foreach($opzioni as $opzione){
+                foreach ($opzioni as $opzione) {
                     echo("<input type='radio' value='$opzione[testo]' name='$quesito[num]'");
-                    if($risposta['testo'] == $opzione['testo']){ echo("checked");}
+                    if ($risposta['testo'] == $opzione['testo']) {
+                        echo("checked");
+                    }
                     echo(">$opzione[testo]</input>
                     ");
                 }
-            } else{ //quesito di codice
+            } else { //quesito di codice
                 echo("
                         <h5>Domanda $quesito[num]:</h5>
                         <p>Difficoltà: $quesito[difficolta]</p>
@@ -82,18 +85,18 @@ require 'upload/nuovoTest.php';
                         <textarea name='$quesito[num]'>$risposta[testo]</textarea>
                        ");
             }
-            if(isset($tabelle)){
+            if (isset($tabelle)) {
                 echo "<p>Tabelle di riferimento:</p>";
-                foreach ($tabelle as $tabellaSelezionata){
+                foreach ($tabelle as $tabellaSelezionata) {
                     $_SESSION['table'] = $tabellaSelezionata;
-                    require ("read/fetch_records.php"); //salvo le istanze della tabella in $records
-                    require ("read/fetch_attributi.php"); //salvo le colonne della tabella in $attributi
+                    require("read/fetch_records.php"); //salvo le istanze della tabella in $records
+                    require("read/fetch_attributi.php"); //salvo le colonne della tabella in $attributi
                     echo("<table><tr>
                     <th>Titolo:</th>
                     <td>$tabellaSelezionata</td>
                     </tr>");
                     echo("<tr>");
-                    foreach ($attributi as $attributo){
+                    foreach ($attributi as $attributo) {
                         echo('<th>' . $attributo['nome'] . '</th>');
                     }
                     echo("</tr>");
@@ -104,10 +107,10 @@ require 'upload/nuovoTest.php';
                         }
                         echo('</tr>');
                     }
-                    echo ("</table>");
+                    echo("</table>");
                 }
             }
-            echo ("</div>");
+            echo("</div>");
         }
     ?>
         <input type="submit" value="visualizza risultati">

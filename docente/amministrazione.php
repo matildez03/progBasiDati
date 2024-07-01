@@ -30,7 +30,7 @@ if (!isset($_SESSION['login'])) {
     <li><a href="test.php">I tuoi test</a></li>
     <li><a href="tabelle.php">Le tue tabelle</a></li>
     <li><a href="../statistiche.php">Statistiche</a></li>
-    <li><a>Messaggi</a></li>
+    <li><a href="messaggi.php">Messaggi</a></li>
     <li><a href="queryInput.php">Fai una query</a></li>
 </nav>
 

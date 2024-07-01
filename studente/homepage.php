@@ -26,7 +26,7 @@ if(!isset($_SESSION['login'])){
 <nav>
     <li><a href="areaTest.php">fai un test</a></li>
     <li><a href="../statistiche.php">statistiche</a></li>
-    <li><a>messaggi</a></li>
+    <li><a href="messaggi.php">messaggi</a></li>
 </nav>
 
 </body>
