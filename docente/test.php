@@ -33,9 +33,10 @@ require ('read/validate.php');
 <form id="nuovoTest" action="upload/createTest.php" method="POST" style="display: none">
     <label>Titolo Test:<input type="text" name="titoloTest" required></label>
     <select name="mostraSoluz">
-        <option value="1" selected>Mostra soluzioni</option>
-        <option value="0">Nascondi soluzioni</option>
+        <option value="1">Mostra soluzioni</option>
+        <option value="0" selected>Nascondi soluzioni</option>
     </select>
+    <input type="file" name="image" accept="image/" value="nessuna immagine selezionata">
     <input type="submit">
 </form>
 

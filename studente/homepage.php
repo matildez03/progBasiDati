@@ -27,6 +27,7 @@ if(!isset($_SESSION['login'])){
     <li><a href="areaTest.php">fai un test</a></li>
     <li><a href="../statistiche.php">statistiche</a></li>
     <li><a href="messaggi.php">messaggi</a></li>
+    <li><a href="recapiti.php">Aggiungi un recapito telefonico</a></li>
 </nav>
 
 </body>

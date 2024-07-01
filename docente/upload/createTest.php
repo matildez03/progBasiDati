@@ -1,15 +1,18 @@
 <?php
 require('../read/validate.php'); //accesso e configurazione db
 
-$titoloTest = $_POST['titoloTest'];
+$titoloTest = trim($_POST['titoloTest']);
 $docente = $_SESSION['login'][0];
 $mostra = intval($_POST['mostraSoluz']); //lo salvo come int
 $data = date("Y-m-d");
 
-$query = "CALL Nuovo_Test(?,?,?,?);";
+$image = $_POST['image'];
+
+
+$query = "CALL Nuovo_Test(?,?,?,?,?);";
 // Prepara la query
 if ($res = $mydb->prepare($query)) {
-    $res->bind_param('sssi', $titoloTest, $docente, $data, $mostra);
+    $res->bind_param('sssis', $titoloTest, $docente, $data, $mostra,$image);
     if ($res->execute()) {
         echo "Inserimento riuscito.";
         //salvo nella variabile di sessione

@@ -3,6 +3,7 @@ if(isset($_SESSION['login'])) {
     $_SESSION['login']= null;
     require('logout.php'); //esegue il logout se c'era una sessione in corso
 }
+//require ('config_logs.php');
 ?>
 <!DOCTYPE html>
 <html lang="it">

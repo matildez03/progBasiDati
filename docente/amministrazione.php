@@ -32,6 +32,8 @@ if (!isset($_SESSION['login'])) {
     <li><a href="../statistiche.php">Statistiche</a></li>
     <li><a href="messaggi.php">Messaggi</a></li>
     <li><a href="queryInput.php">Fai una query</a></li>
+    <li><a href="recapiti.php">Aggiungi un recapito telefonico</a></li>
+
 </nav>
 
 </body>
